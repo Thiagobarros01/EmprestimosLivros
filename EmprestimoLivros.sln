@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmprestimoLivros.API", "EmprestimoLivros.API\EmprestimoLivros.API.csproj", "{CD8520D7-198E-40C5-8323-566A38B69076}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CD8520D7-198E-40C5-8323-566A38B69076}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD8520D7-198E-40C5-8323-566A38B69076}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD8520D7-198E-40C5-8323-566A38B69076}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD8520D7-198E-40C5-8323-566A38B69076}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AA4E9CD3-4852-4F01-ACA0-A2425E3E84AC}
+	EndGlobalSection
+EndGlobal
