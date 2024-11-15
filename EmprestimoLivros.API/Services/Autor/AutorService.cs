@@ -15,8 +15,25 @@ namespace EmprestimoLivros.API.Services.Autor {
             throw new NotImplementedException();
         }
 
-        public Task<ResponseModel<AutorModel>> BuscarAutorPorLivro(int idLivro) {
-            throw new NotImplementedException();
+        public async Task<ResponseModel<AutorModel>> BuscarAutorPorLivro(int idLivro) {
+            ResponseModel<AutorModel> resposta = new ResponseModel<AutorModel>();
+            try {
+                var autor = await _context.Autores.FirstOrDefaultAsync(a => a.Id == idLivro);
+                if(autor == null) {
+                    resposta.Mensagem = "Autor não encontrado!";
+                    return resposta;
+                }
+                resposta.Mensagem = "Autor encontrado com sucesso!";
+                resposta.Dados = autor;
+                return resposta;
+
+            }
+            catch (Exception ex) {
+              resposta.Mensagem = ex.Message;
+                resposta.Status = false;
+              return resposta;
+            }
+
         }
 
         public async Task<ResponseModel<List<AutorModel>>> ListarAutores() {
