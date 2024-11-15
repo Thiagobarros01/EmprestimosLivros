@@ -11,15 +11,11 @@ namespace EmprestimoLivros.API.Services.Autor {
             _context = context;
         }
 
-        public Task<ResponseModel<AutorModel>> BuscarAutorPorId(int idAutor) {
-            throw new NotImplementedException();
-        }
-
-        public async Task<ResponseModel<AutorModel>> BuscarAutorPorLivro(int idLivro) {
+        public async Task<ResponseModel<AutorModel>> BuscarAutorPorId(int idAutor) {
             ResponseModel<AutorModel> resposta = new ResponseModel<AutorModel>();
             try {
-                var autor = await _context.Autores.FirstOrDefaultAsync(a => a.Id == idLivro);
-                if(autor == null) {
+                var autor = await _context.Autores.FirstOrDefaultAsync(a => a.Id == idAutor);
+                if (autor == null) {
                     resposta.Mensagem = "Autor não encontrado!";
                     return resposta;
                 }
@@ -29,9 +25,33 @@ namespace EmprestimoLivros.API.Services.Autor {
 
             }
             catch (Exception ex) {
-              resposta.Mensagem = ex.Message;
+                resposta.Mensagem = ex.Message;
                 resposta.Status = false;
-              return resposta;
+                return resposta;
+            }
+        }
+
+        public async Task<ResponseModel<AutorModel>> BuscarAutorPorLivro(int idLivro) {
+
+            ResponseModel<AutorModel> resposta = new ResponseModel<AutorModel>();
+
+            try {
+                var livro = await _context.Livros.Include(a => a.Autor).FirstOrDefaultAsync(l => l.Id == idLivro);
+                if (livro == null) {
+                    resposta.Mensagem = "Usuário não encontrado!";
+                    return resposta;
+                }
+
+                resposta.Dados = livro.Autor;
+                resposta.Mensagem = "Usuário encontrado com sucesso!";
+                return resposta;
+
+            }
+
+            catch (Exception ex) {
+                resposta.Mensagem = ex.Message;
+                resposta.Status = false;
+                return resposta;
             }
 
         }
