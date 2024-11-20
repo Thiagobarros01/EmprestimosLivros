@@ -1,4 +1,5 @@
 ﻿using EmprestimoLivros.API.Data;
+using EmprestimoLivros.API.Dto;
 using EmprestimoLivros.API.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
@@ -56,23 +57,87 @@ namespace EmprestimoLivros.API.Services.Autor {
 
         }
 
+        public async Task<ResponseModel<List<AutorModel>>> CriarAutor(AutorCriacaoDto autorCriacaoDto) {
+            ResponseModel<List<AutorModel>> request = new ResponseModel<List<AutorModel>>();
+
+            try {
+
+                var autor = new AutorModel() {
+                    Name = autorCriacaoDto.Name,
+                    Sobrenome = autorCriacaoDto.Sobrenome
+                };
+
+                _context.Add(autor);
+                await _context.SaveChangesAsync();
+
+                request.Dados = await _context.Autores.ToListAsync();
+                request.Mensagem = "Autor Criado com Sucesso";
+
+                return request;
+
+
+
+            }
+            catch (Exception ex) {
+                request.Mensagem = ex.Message;
+                request.Status = false;
+                return request;
+
+            }
+
+
+        }
+
+        public async Task<ResponseModel<AutorModel>> DeletarAutor(int idAutor) {
+            ResponseModel<AutorModel> resposta = new ResponseModel<AutorModel>();
+
+            try {
+                var autor = await _context.Autores.FirstOrDefaultAsync(x => x.Id == idAutor);
+
+                if (autor == null) {
+                    resposta.Mensagem = "Autor Não encontrado!";
+                    return resposta;
+                }
+
+                 _context.Autores.Remove(autor); 
+                 await _context.SaveChangesAsync();
+
+                resposta.Mensagem = "Autor Excluido com sucesso!";
+                resposta.Status = true;
+                return resposta;
+            }
+            catch (Exception ex) {
+                
+                resposta.Mensagem =ex.Message;    
+                resposta.Status = false;
+                return resposta;
+            
+            }
+            
+           
+
+
+        }
+
         public async Task<ResponseModel<List<AutorModel>>> ListarAutores() {
 
             ResponseModel<List<AutorModel>> resposta = new ResponseModel<List<AutorModel>>();
             try {
 
-                var autores = await _context.Autores.ToListAsync();
+                var autores = await _context.Autores.Include(a => a.Livros).ToListAsync();
                 resposta.Dados = autores;
                 resposta.Mensagem = "Todos os autores foram coletados!";
                 return resposta;
 
             }
-            catch (Exception e){
-                
+            catch (Exception e) {
+
                 resposta.Mensagem = e.Message;
                 resposta.Status = false;
                 return resposta;
             }
         }
+
+      
     }
 }

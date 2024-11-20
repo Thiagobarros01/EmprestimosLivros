@@ -1,4 +1,5 @@
-﻿using EmprestimoLivros.API.Models;
+﻿using EmprestimoLivros.API.Dto;
+using EmprestimoLivros.API.Models;
 using EmprestimoLivros.API.Services.Autor;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ namespace EmprestimoLivros.API.Controllers {
         }
 
         [HttpGet("BuscarAutorPorId/{idAutor}")]
-       public async Task<ActionResult<ResponseModel<AutorModel>>> BuscarAutorPorId(int idAutor) {
+        public async Task<ActionResult<ResponseModel<AutorModel>>> BuscarAutorPorId(int idAutor) {
             var autor = await _autorInterface.BuscarAutorPorId(idAutor);
             return Ok(autor);
         }
@@ -30,6 +31,20 @@ namespace EmprestimoLivros.API.Controllers {
         [HttpGet("BuscarAutorPorIdLivro/{idLivro}")]
         public async Task<ActionResult<ResponseModel<AutorModel>>> BuscarAutorPorIdLivro(int idLivro) {
             var autor = await _autorInterface.BuscarAutorPorLivro(idLivro);
+            return Ok(autor);
+        }
+
+        [HttpPost("CriarAutor")]
+        public async Task<ActionResult<ResponseModel<AutorModel>>> CriarAutor(AutorCriacaoDto autorCriacaoDto) {
+
+            var autor = await _autorInterface.CriarAutor(autorCriacaoDto);
+            return Ok(autor);
+
+        }
+
+        [HttpDelete("DeletarAutor/{idAutor}")]
+        public async Task<ActionResult<ResponseModel<AutorModel>>> DeletarAutor(int idAutor) {
+            var autor = await _autorInterface.DeletarAutor(idAutor);
             return Ok(autor);
         }
     

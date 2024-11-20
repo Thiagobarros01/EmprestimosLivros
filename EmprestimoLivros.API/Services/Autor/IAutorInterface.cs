@@ -1,4 +1,5 @@
-﻿using EmprestimoLivros.API.Models;
+﻿using EmprestimoLivros.API.Dto;
+using EmprestimoLivros.API.Models;
 
 namespace EmprestimoLivros.API.Services.Autor {
     public interface IAutorInterface {
@@ -8,5 +9,9 @@ namespace EmprestimoLivros.API.Services.Autor {
         Task<ResponseModel<AutorModel>> BuscarAutorPorId(int idAutor);
 
         Task<ResponseModel<AutorModel>> BuscarAutorPorLivro(int idLivro);
+
+        Task<ResponseModel<List<AutorModel>>> CriarAutor(AutorCriacaoDto autorCriacaoDto);
+
+        Task<ResponseModel<AutorModel>> DeletarAutor(int idAutor); 
     }
 }
