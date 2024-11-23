@@ -47,7 +47,12 @@ namespace EmprestimoLivros.API.Controllers {
             var autor = await _autorInterface.DeletarAutor(idAutor);
             return Ok(autor);
         }
-    
+
+        [HttpPut("Editar")]
+        public async Task<ActionResult<ResponseModel<AutorModel>>> EditarAutor(AutorEdicaoDto idAutor) {
+            var autor = await _autorInterface.EditarAutor(idAutor);
+            return Ok(autor);
+        }
     }
 
 

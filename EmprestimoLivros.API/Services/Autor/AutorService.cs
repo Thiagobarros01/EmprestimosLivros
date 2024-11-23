@@ -119,6 +119,42 @@ namespace EmprestimoLivros.API.Services.Autor {
 
         }
 
+        public async Task<ResponseModel<AutorModel>> EditarAutor(AutorEdicaoDto autorDtoUpdate) {
+            ResponseModel<AutorModel> resposta = new ResponseModel<AutorModel>();
+
+            try {
+                var autor = await _context.Autores.Include(l => l.Livros).FirstOrDefaultAsync(a => a.Id == autorDtoUpdate.Id);
+                
+                if (autor == null) 
+
+                {
+                    
+                    resposta.Mensagem = "Autor não encontrado!";
+                    return resposta;
+                }
+
+
+                autor.Name = autorDtoUpdate.Name;
+                autor.Sobrenome = autorDtoUpdate.Sobrenome;
+
+                _context.Autores.Update(autor);
+
+                await _context.SaveChangesAsync();
+
+                resposta.Dados = autor;
+                resposta.Mensagem = "Atualizado com sucesso";
+                resposta.Status = true;
+                return resposta;
+            }
+            catch(Exception ex) {
+                resposta.Mensagem = ex.Message;
+                resposta.Status = false;
+                return resposta;
+                
+            }
+
+        }
+
         public async Task<ResponseModel<List<AutorModel>>> ListarAutores() {
 
             ResponseModel<List<AutorModel>> resposta = new ResponseModel<List<AutorModel>>();

@@ -12,6 +12,8 @@ namespace EmprestimoLivros.API.Services.Autor {
 
         Task<ResponseModel<List<AutorModel>>> CriarAutor(AutorCriacaoDto autorCriacaoDto);
 
-        Task<ResponseModel<AutorModel>> DeletarAutor(int idAutor); 
+        Task<ResponseModel<AutorModel>> DeletarAutor(int idAutor);
+
+        Task<ResponseModel<AutorModel>> EditarAutor(AutorEdicaoDto editarAutorDto);
     }
 }
