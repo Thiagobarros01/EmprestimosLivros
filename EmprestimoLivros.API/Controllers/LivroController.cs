@@ -24,5 +24,13 @@ namespace EmprestimoLivros.API.Controllers {
           
         }
 
+
+        [HttpGet("ListarLivrPorId/{IdLivro}")]
+        public async Task<ActionResult<ResponseModel<LivroModel>>> ListarLivroPorId(int IdLivro) {
+
+            var livro = await _livroInterface.BuscarLivroPorId(IdLivro);
+            return Ok(livro);
+        }
+
     }
 }
