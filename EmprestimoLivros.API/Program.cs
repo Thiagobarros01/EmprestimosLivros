@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using EmprestimoLivros.API;
 using EmprestimoLivros.API.Data;
 using EmprestimoLivros.API.Services.Autor;
+using EmprestimoLivros.API.Services.Livro;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ builder.Services.AddSwaggerGen();
 
 //INJETAR DEPENDENCIA
 builder.Services.AddScoped<IAutorInterface, AutorService>();
+builder.Services.AddScoped<ILivroInterface, LivroService>();
 
 // CALL CONNECTION
 builder.Services.AddDbContext<AppDbContext>(options =>
