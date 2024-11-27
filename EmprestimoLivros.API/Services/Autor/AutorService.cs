@@ -160,7 +160,7 @@ namespace EmprestimoLivros.API.Services.Autor {
             ResponseModel<List<AutorModel>> resposta = new ResponseModel<List<AutorModel>>();
             try {
 
-                var autores = await _context.Autores.Include(a => a.Livros).ToListAsync();
+                var autores = await _context.Autores.ToListAsync();
                 resposta.Dados = autores;
                 resposta.Mensagem = "Todos os autores foram coletados!";
                 return resposta;

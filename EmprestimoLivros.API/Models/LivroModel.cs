@@ -5,7 +5,7 @@ namespace EmprestimoLivros.API.Models {
 
         public int Id { get; set; }
         public string Titulo { get; set; }
-        [JsonIgnore]
+        
         public AutorModel Autor { get; set; }
 
     }

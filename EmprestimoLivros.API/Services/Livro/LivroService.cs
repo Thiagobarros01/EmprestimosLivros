@@ -43,26 +43,30 @@ namespace EmprestimoLivros.API.Services.Livro {
             }
         }
 
+
+        // PENDENTE DE CORREÇÃO []
         public async Task<ResponseModel<List<LivroModel>>> CriarLivro(LivroCriacaoDto livroCriacaoDto) {
            ResponseModel<List<LivroModel>> resposta = new ResponseModel<List<LivroModel>>();
 
             try {
 
-                var Livro = new LivroModel() {
+                var autor = await _context.Autores.FirstOrDefaultAsync(autor => autor.Id == livroCriacaoDto.Autor.Id);
 
+                if (autor == null) {
+                    resposta.Mensagem = "Impossível criar autor, autor não encontrado!";
+                    return resposta;
+                }
+
+                var livro = new LivroModel() {
                     Titulo = livroCriacaoDto.Titulo,
-                    Autor = livroCriacaoDto.Autor
+                    Autor = autor
+
                 };
-                
-                _context.Add(Livro);
+                _context.Add(livro);
                 await _context.SaveChangesAsync();
-                resposta.Mensagem = "Livro Criado com sucesso!";
-
-                var livros = await _context.Livros.ToListAsync();
-
-                resposta.Dados = livros;
-                resposta.Status = true;
-                
+                resposta.Dados = await _context.Livros.Include(a => a.Autor).ToListAsync();
+                resposta.Mensagem = "Livro criado com sucesso!";
+                resposta.Status = true; 
                 return resposta;
 
 
@@ -108,12 +112,13 @@ namespace EmprestimoLivros.API.Services.Livro {
 
         }
 
+        
         public async Task<ResponseModel<List<LivroModel>>> ListarLivro() {
             ResponseModel<List<LivroModel>> resposta = new ResponseModel<List<LivroModel>>();
 
             try {
 
-                var livro = await _context.Livros.ToListAsync();
+                var livro = await _context.Livros.Include(a => a.Autor).ToListAsync();
                 resposta.Dados = livro;
                 resposta.Mensagem = "Livros encontrados!";
                 resposta.Status = true;

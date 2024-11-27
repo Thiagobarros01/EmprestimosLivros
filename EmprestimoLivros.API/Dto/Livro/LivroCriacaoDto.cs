@@ -1,4 +1,5 @@
-﻿using EmprestimoLivros.API.Models;
+﻿using EmprestimoLivros.API.Dto.Vinculo;
+using EmprestimoLivros.API.Models;
 using System.Text.Json.Serialization;
 
 namespace EmprestimoLivros.API.Dto.Livro {
@@ -6,7 +7,7 @@ namespace EmprestimoLivros.API.Dto.Livro {
 
         public string Titulo { get; set; }
         
-        public AutorModel Autor { get; set; }
+        public AutorVinculoDto Autor { get; set; }
 
     }
 }
