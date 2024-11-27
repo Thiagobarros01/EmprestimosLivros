@@ -1,4 +1,5 @@
 ﻿using EmprestimoLivros.API.Data;
+using EmprestimoLivros.API.Dto.Livro;
 using EmprestimoLivros.API.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,6 +39,53 @@ namespace EmprestimoLivros.API.Services.Livro {
                 resposta.Status = false;
                 return resposta;
             }
+        }
+
+        public Task<ResponseModel<LivroModel>> CriarLivro(LivroCriacaoDto livroCriacaoDto) {
+           ResponseModel<LivroModel> resposta = new ResponseModel<LivroModel>();
+
+            try {
+
+            }
+            catch (Exception ex) {
+                resposta.Mensagem = ex.Message;
+                resposta.Status = false;
+                return resposta;
+            }
+
+        }
+
+        public Task<ResponseModel<LivroModel>> EditarLivro(LivroEdicaoDto livroEdicaoDto) {
+            throw new NotImplementedException();
+        }
+
+        public async Task<ResponseModel<LivroModel>> ExcluirLivro(int idLivro) {
+            ResponseModel<LivroModel> resposta = new ResponseModel<LivroModel>();
+
+            try {
+                var livro = await _context.Livros.FirstOrDefaultAsync(l => l.Id == idLivro);
+
+                if (livro == null) {
+                    resposta.Mensagem = "Id Livro não encontrado!";   
+                    return resposta;
+                }
+                
+                _context.Remove(livro);
+                _context.SaveChanges();
+                resposta.Mensagem = "Livro excluído com sucesso!";
+                resposta.Dados = livro;
+                resposta.Status = false;
+
+                return resposta;
+
+
+            }
+            catch(Exception ex) {
+                resposta.Mensagem = ex.Message;
+                resposta.Status = false;
+                return resposta;
+            }
+
         }
 
         public async Task<ResponseModel<List<LivroModel>>> ListarLivro() {

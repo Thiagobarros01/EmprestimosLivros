@@ -1,4 +1,5 @@
 ﻿using EmprestimoLivros.API.Models;
+using EmprestimoLivros.API.Dto.Livro;
 
 namespace EmprestimoLivros.API.Services.Livro {
     public interface ILivroInterface {
@@ -7,6 +8,10 @@ namespace EmprestimoLivros.API.Services.Livro {
 
         public Task<ResponseModel<LivroModel>> BuscarLivroPorId(int idLivro);
 
+        public Task<ResponseModel<LivroModel>> CriarLivro(LivroCriacaoDto livroCriacaoDto);
 
+        public Task<ResponseModel<LivroModel>> EditarLivro(LivroEdicaoDto livroEdicaoDto);
+
+        public Task<ResponseModel<LivroModel>> ExcluirLivro(int idLivro);
     }
 }
