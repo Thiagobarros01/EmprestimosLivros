@@ -8,6 +8,8 @@ namespace EmprestimoLivros.API.Services.Livro {
 
         public Task<ResponseModel<LivroModel>> BuscarLivroPorId(int idLivro);
 
+        public Task<ResponseModel<LivroModel>> BuscarLivroPorAutorId(int AutorId);
+
         public Task<ResponseModel<List<LivroModel>>> CriarLivro(LivroCriacaoDto livroCriacaoDto);
 
         public Task<ResponseModel<LivroModel>> EditarLivro(LivroEdicaoDto livroEdicaoDto);

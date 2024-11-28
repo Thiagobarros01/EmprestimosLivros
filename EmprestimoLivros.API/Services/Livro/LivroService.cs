@@ -3,7 +3,7 @@ using EmprestimoLivros.API.Dto;
 using EmprestimoLivros.API.Dto.Livro;
 using EmprestimoLivros.API.Models;
 using Microsoft.EntityFrameworkCore;
-using EmprestimoLivros.API.Dto.Livro;
+using EmprestimoLivros.API.Dto.Vinculo;
 
 namespace EmprestimoLivros.API.Services.Livro {
     public class LivroService : ILivroInterface {
@@ -12,6 +12,27 @@ namespace EmprestimoLivros.API.Services.Livro {
 
         public LivroService(AppDbContext context) {
            _context = context;
+        }
+
+        public async Task<ResponseModel<LivroModel>> BuscarLivroPorAutorId(int AutorId) {
+            ResponseModel<LivroModel> resposta = new ResponseModel<LivroModel>();
+            
+            try {
+
+                var livro = await _context.Livros.Include(l => l.Autor).FirstOrDefaultAsync(l => l.Autor.Id == AutorId);
+                if (livro == null) {
+                    resposta.Mensagem = "Autor não encontrado!";
+                    return resposta;
+                }
+                resposta.Mensagem = "Dados encontrado com sucesso!";
+                resposta.Dados = livro;
+                return resposta;
+            }
+            catch(Exception ex) {
+                resposta.Mensagem = ex.Message;
+                resposta.Status = false;
+                return resposta;
+            }
         }
 
         public async Task<ResponseModel<LivroModel>> BuscarLivroPorId(int idLivro) {
@@ -44,7 +65,7 @@ namespace EmprestimoLivros.API.Services.Livro {
         }
 
 
-        // PENDENTE DE CORREÇÃO []
+        
         public async Task<ResponseModel<List<LivroModel>>> CriarLivro(LivroCriacaoDto livroCriacaoDto) {
            ResponseModel<List<LivroModel>> resposta = new ResponseModel<List<LivroModel>>();
 

@@ -45,5 +45,11 @@ namespace EmprestimoLivros.API.Controllers {
             return Ok(livro);
         }
 
+        [HttpGet("BuscarLivroPorAutorId/{AutorId}")]
+        public async Task<ActionResult<ResponseModel<LivroModel>>> BuscarLivroPorAutorId(int AutorId) {
+            var livro = await _livroInterface.BuscarLivroPorAutorId(AutorId);
+            return Ok(livro);
+        }
+
     }
 }
