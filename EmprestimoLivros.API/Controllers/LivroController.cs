@@ -51,5 +51,11 @@ namespace EmprestimoLivros.API.Controllers {
             return Ok(livro);
         }
 
+        [HttpPut("EditarLivro")]
+        public async Task<ActionResult<LivroModel>> EditarLivro(LivroEdicaoDto idLivro) {
+            var livro = await _livroInterface.EditarLivro(idLivro);
+            return Ok(livro);
+        }
+
     }
 }

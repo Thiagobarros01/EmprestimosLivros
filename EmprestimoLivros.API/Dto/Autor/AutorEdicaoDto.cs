@@ -1,5 +1,7 @@
-﻿namespace EmprestimoLivros.API.Dto {
-    public class AutorEdicaoDto {
+﻿namespace EmprestimoLivros.API.Dto.Autor
+{
+    public class AutorEdicaoDto
+    {
 
         public int Id { get; set; }
         public string Name { get; set; }

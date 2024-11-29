@@ -1,10 +1,11 @@
-﻿using EmprestimoLivros.API.Dto;
+﻿using EmprestimoLivros.API.Dto.Autor;
 using EmprestimoLivros.API.Models;
 using EmprestimoLivros.API.Services.Autor;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EmprestimoLivros.API.Controllers {
+namespace EmprestimoLivros.API.Controllers
+{
     [Route("api/[controller]")]
     [ApiController]
     public class AutorController : ControllerBase {

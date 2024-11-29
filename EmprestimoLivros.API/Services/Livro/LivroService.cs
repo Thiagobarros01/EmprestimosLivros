@@ -100,8 +100,51 @@ namespace EmprestimoLivros.API.Services.Livro {
 
         }
 
-        public Task<ResponseModel<LivroModel>> EditarLivro(LivroEdicaoDto livroEdicaoDto) {
-            throw new NotImplementedException();
+        public async Task<ResponseModel<List<LivroModel>>> EditarLivro(LivroEdicaoDto livroEdicaoDto) {
+            ResponseModel<List<LivroModel>> resposta = new ResponseModel<List<LivroModel>>();
+
+            try {
+                var livro = await _context.Livros.Include(a => a.Autor).FirstOrDefaultAsync(l => l.Id == livroEdicaoDto.Id);
+
+                var autor = await _context.Autores.FirstOrDefaultAsync(a => a.Id == livroEdicaoDto.Autor.Id);
+
+
+                if (livro == null) {
+                    resposta.Mensagem = "Livro não encontrado!";
+                    return resposta;
+                    
+                }
+
+
+                if (autor == null) {
+                    resposta.Mensagem = "Livro não encontrado!";
+                    return resposta;
+                }
+
+
+                
+                livro.Titulo = livroEdicaoDto.Titulo;
+                livro.Autor = autor;
+                
+                
+                _context.Update(livro);
+                await _context.SaveChangesAsync();
+
+                resposta.Dados = await _context.Livros.ToListAsync();
+                resposta.Status = true;
+                resposta.Mensagem = "Livro atualizado com sucesso! ";
+                return resposta;
+                
+                
+
+            }
+            catch (Exception ex) {
+                resposta.Mensagem = ex.Message;
+                resposta.Status = false;
+                return resposta;
+            }
+
+
         }
 
         public async Task<ResponseModel<LivroModel>> ExcluirLivro(int idLivro) {

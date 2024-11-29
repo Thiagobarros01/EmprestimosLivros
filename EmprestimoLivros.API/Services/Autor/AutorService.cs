@@ -1,9 +1,10 @@
 ﻿using EmprestimoLivros.API.Data;
-using EmprestimoLivros.API.Dto;
+using EmprestimoLivros.API.Dto.Autor;
 using EmprestimoLivros.API.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-namespace EmprestimoLivros.API.Services.Autor {
+namespace EmprestimoLivros.API.Services.Autor
+{
     public class AutorService : IAutorInterface {
 
         private readonly AppDbContext _context;
@@ -108,7 +109,7 @@ namespace EmprestimoLivros.API.Services.Autor {
             }
             catch (Exception ex) {
                 
-                resposta.Mensagem =ex.Message;    
+                resposta.Mensagem = ex.Message;    
                 resposta.Status = false;
                 return resposta;
             
@@ -123,10 +124,9 @@ namespace EmprestimoLivros.API.Services.Autor {
             ResponseModel<AutorModel> resposta = new ResponseModel<AutorModel>();
 
             try {
-                var autor = await _context.Autores.Include(l => l.Livros).FirstOrDefaultAsync(a => a.Id == autorDtoUpdate.Id);
+                var livro = await _context.Autores.Include(l => l.Livros).FirstOrDefaultAsync(a => a.Id == autorDtoUpdate.Id);
                 
-                if (autor == null) 
-
+                if (livro == null) 
                 {
                     
                     resposta.Mensagem = "Autor não encontrado!";
@@ -134,14 +134,14 @@ namespace EmprestimoLivros.API.Services.Autor {
                 }
 
 
-                autor.Name = autorDtoUpdate.Name;
-                autor.Sobrenome = autorDtoUpdate.Sobrenome;
+                livro.Name = autorDtoUpdate.Name;
+                livro.Sobrenome = autorDtoUpdate.Sobrenome;
 
-                _context.Autores.Update(autor);
+                _context.Autores.Update(livro);
 
                 await _context.SaveChangesAsync();
 
-                resposta.Dados = autor;
+                resposta.Dados = livro;
                 resposta.Mensagem = "Atualizado com sucesso";
                 resposta.Status = true;
                 return resposta;
